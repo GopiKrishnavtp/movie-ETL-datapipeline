@@ -1,10 +1,11 @@
 # Movie Data Pipeline
 
-A simple ETL pipeline that ingests, cleans, and organizes movie data for analysis.
-This project implements a small ETL pipeline for a movie analytics scenario.
-It extracts movie and rating data from CSV files and enriches it with details from the OMDb API.
-The data is cleaned, transformed, and loaded into a SQLite database.
-This structured database can then be used to run analytical queries on movies, genres, directors, and ratings.
+ A simple ETL pipeline that ingests, cleans, and organizes movie data for analysis.
+ This project implements a small ETL pipeline for a movie analytics scenario.
+ It extracts movie and rating data from CSV files and enriches it with details from the OMDb API.
+ The data is cleaned, transformed, and loaded into a SQLite database.
+ This structured database can then be used to run analytical queries on movies, genres, directors, and ratings.
+
 
 # Setup and Run Instructions
 
