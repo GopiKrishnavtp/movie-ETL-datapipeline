@@ -1,6 +1,6 @@
 # Movie ETL Data Pipeline
 
-A small ETL pipeline that extracts movie and rating data from CSV files, enriches the movie data with details from an external API (for example TMDB), cleans and transforms the data, and loads it into a SQLite database for analytics.
+A small ETL pipeline that extracts movie and rating data from CSV files, enriches the movie data with details from an external API (for example OMDB), cleans and transforms the data, and loads it into a SQLite database for analytics.
 
 ## Features
 - Parse movie and rating CSV files.
@@ -33,7 +33,6 @@ cd movie-ETL-datapipeline
 2. Create and activate a virtual environment
 ```bash
 python3 -m venv .venv
-source .venv/bin/activate        # macOS/Linux
 # .venv\Scripts\activate         # Windows PowerShell
 ```
 
@@ -43,9 +42,9 @@ pip install -r requirements.txt
 ```
 
 4. Configuration
-- Create a `.env` file (or update configuration) with any required environment variables, for example:
+- Create a `config.py` file (or update configuration) with any required environment variables, for example:
 ```
-TMDB_API_KEY=your_tmdb_api_key_here
+TMDB_API_KEY=your_omdb_api_key_here
 DB_PATH=data/movies.db
 DATA_DIR=data
 ```
@@ -65,17 +64,17 @@ If your CSV columns differ, update the ETL script or add a mapping configuration
 ## Running the ETL
 Example command (adjust script name and arguments to match repo):
 ```bash
-python run_etl.py --data-dir data --db-path data/movies.db
+python run_etl.py --data-dir data --db-path data/movies_analytics.db
 ```
 Or if the entrypoint is a module:
 ```bash
-python -m etl.run --data-dir data --db-path data/movies.db
+python -m etl.run --data-dir data --db-path data/movies_analytics.db
 ```
 
 Common CLI options:
 - --data-dir : directory containing CSV input files
 - --db-path  : path to SQLite database file
-- --api-key  : movie metadata API key (if not set in .env)
+- --api-key  : movie metadata API key (if not set in config.py)
 
 ## Database schema (example)
 The ETL creates a normalized SQLite schema. Example tables:
@@ -88,7 +87,7 @@ The ETL creates a normalized SQLite schema. Example tables:
 
 Use sqlite3 or a GUI client to inspect the DB:
 ```bash
-sqlite3 data/movies.db
+sqlite3 data/movies_analytics.db
 .tables
 ```
 
@@ -100,7 +99,7 @@ pytest
 ```
 
 ## Troubleshooting
-- Missing API key: ensure TMDB_API_KEY or relevant key is set.
+- Missing API key: ensure OMDB_API_KEY or relevant key is set.
 - CSV parsing errors: verify delimiter and encoding (UTF-8).
 - Duplicate entries: check deduplication logic in the ETL scripts.
 - Schema mismatches: confirm expected CSV column names and adjust mapping.
@@ -110,8 +109,6 @@ pytest
 2. Create a feature branch
 3. Open a pull request with clear description of changes
 
-## License
-Specify your license here (e.g., MIT). If you don't have one, consider adding a LICENSE file.
 
 ## Contact
 For issues and questions, open an issue on the repository or contact the maintainer: @GopiKrishnavtp
