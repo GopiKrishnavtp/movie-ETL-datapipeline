@@ -45,7 +45,7 @@ pip install -r requirements.txt
 - Create a `config.py` file (or update configuration) with any required environment variables, for example:
 ```
 OMDB_API_KEY=your_omdb_api_key_here
-DB_PATH=data/movies.db
+DB_PATH=data/movies_analytics.db
 DATA_DIR=data
 ```
 - If your pipeline uses different config keys, update accordingly.
