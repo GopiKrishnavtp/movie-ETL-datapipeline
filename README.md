@@ -13,7 +13,7 @@ A small ETL pipeline that extracts movie and rating data from CSV files, enriche
 - Python 3.8+
 - pip
 - sqlite3 (usually included with Python)
-- (Optional) API key for the external movie metadata source (TMDB or similar)
+- (Optional) API key for the external movie metadata source (OMDB or similar)
 
 ## Repository layout
 (Adjust paths if your repository differs)
