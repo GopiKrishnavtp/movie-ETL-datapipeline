@@ -6,7 +6,6 @@ It extracts movie and rating data from CSV files and enriches it with details fr
 The data is cleaned, transformed, and loaded into a SQLite database.
 This structured database can then be used to run analytical queries on movies, genres, directors, and ratings.
 
-
 # Setup and Run Instructions
 
 1. Install Python 3.8+ and required packages:
