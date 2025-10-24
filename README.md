@@ -1,68 +1,117 @@
-# Movie Data Pipeline
+# Movie ETL Data Pipeline
 
-A simple ETL pipeline that ingests, cleans, and organizes movie data for analysis.
-This project implements a small ETL pipeline for a movie analytics scenario.
-It extracts movie and rating data from CSV files and enriches it with details from the OMDb API.
-The data is cleaned, transformed, and loaded into a SQLite database.
-This structured database can then be used to run analytical queries on movies, genres, directors, and ratings.
+A small ETL pipeline that extracts movie and rating data from CSV files, enriches the movie data with details from an external API (for example TMDB), cleans and transforms the data, and loads it into a SQLite database for analytics.
 
-# Setup and Run Instructions
+## Features
+- Parse movie and rating CSV files.
+- Enrich movie records with external metadata (e.g., runtime, overview, release date).
+- Clean and normalize genres, directors, and other metadata.
+- Load transformed data into a SQLite database with normalized tables for movies, genres, directors, and ratings.
+- Simple CLI to run the ETL pipeline.
 
-1. Install Python 3.8+ and required packages:
-   * pip install -r requirements.txt
+## Prerequisites
+- Python 3.8+
+- pip
+- sqlite3 (usually included with Python)
+- (Optional) API key for the external movie metadata source (TMDB or similar)
 
-2. Create config.py with your OMDb API key:
-   * API_KEY = "your_omdb_api_key_here"
+## Repository layout
+(Adjust paths if your repository differs)
+- data/               # Place input CSV files here (example: movies.csv, ratings.csv)
+- src/ or app/        # ETL scripts and modules (e.g., run_etl.py, etl/*.py)
+- requirements.txt
+- README.md
 
-3. Download the MovieLens dataset:
-   * Go to https://grouplens.org/datasets/movielens/latest/
-   * Extract movies.csv and ratings.csv into the project folder.
-   * Place movies.csv and ratings.csv in the project folder.
-   * Run the ETL pipeline:python etl.py
+## Setup
 
-# Design Choices & Assumptions
+1. Clone the repository
+```bash
+git clone https://github.com/GopiKrishnavtp/movie-ETL-datapipeline.git
+cd movie-ETL-datapipeline
+```
 
-1. Database: Used SQLite for simplicity and easy portability.
+2. Create and activate a virtual environment
+```bash
+python3 -m venv .venv
+source .venv/bin/activate        # macOS/Linux
+# .venv\Scripts\activate         # Windows PowerShell
+```
 
-2. Schema Design: 
-   * Normalized tables – movies, ratings, genres, and movie_genres – to handle many-to-many relationships and avoid duplicate data.
+3. Install dependencies
+```bash
+pip install -r requirements.txt
+```
 
-3. ETL Approach:
-   * Extract: Read CSVs and fetch additional movie details from the OMDb API.
-   * Transform: Clean missing values, parse release year, normalize genres, convert BoxOffice to numeric.
-   * Load: Insert into database with replace to ensure idempotency.
+4. Configuration
+- Create a `.env` file (or update configuration) with any required environment variables, for example:
+```
+TMDB_API_KEY=your_tmdb_api_key_here
+DB_PATH=data/movies.db
+DATA_DIR=data
+```
+- If your pipeline uses different config keys, update accordingly.
 
-4. Assumptions:
-   * Movie titles may not exactly match API entries, so release year is included for better matching.
-   * Missing API fields are allowed and handled gracefully.
-   * The dataset is small, so SQLite is sufficient; for larger datasets, a more robust RDBMS could be used.
+## Input data expectations
+Place your CSV files in the data directory (or the folder you configure). Example expected files and columns (adapt to your CSV schema):
 
-# Challenges & How I Overcame Them
-1. Inconsistent movie titles in the OMDb API: 
-   * Cleaned titles and included release year to improve matching.
+- movies.csv
+  - movieId, title, genres
+- ratings.csv
+  - userId, movieId, rating, timestamp
+- (optional) links.csv / tags.csv depending on your dataset
 
-2. Missing or incomplete API data: 
-   * Handled gracefully by allowing None values and logging warnings.
+If your CSV columns differ, update the ETL script or add a mapping configuration.
 
-3. BoxOffice values in different formats: 
-   * Used regex to remove $ and , and converted to numeric.
+## Running the ETL
+Example command (adjust script name and arguments to match repo):
+```bash
+python run_etl.py --data-dir data --db-path data/movies.db
+```
+Or if the entrypoint is a module:
+```bash
+python -m etl.run --data-dir data --db-path data/movies.db
+```
 
-4. API rate limits: 
-   * Added a small delay (time.sleep(0.05)) between requests.
+Common CLI options:
+- --data-dir : directory containing CSV input files
+- --db-path  : path to SQLite database file
+- --api-key  : movie metadata API key (if not set in .env)
 
-5. Ensuring idempotency: 
-   * Used DROP TABLE IF EXISTS and if_exists='replace' to safely reload data.  
+## Database schema (example)
+The ETL creates a normalized SQLite schema. Example tables:
+- movies (id, title, year, runtime, overview, external_id, ...)
+- genres (id, name)
+- movie_genres (movie_id, genre_id)
+- directors (id, name)
+- movie_directors (movie_id, director_id)
+- ratings (id, user_id, movie_id, rating, timestamp)
 
-# Design
-![graph](graphdata.jpg)
+Use sqlite3 or a GUI client to inspect the DB:
+```bash
+sqlite3 data/movies.db
+.tables
+```
 
-movie-data-pipeline/           # Root project folder
-├── etl.py                     # Main ETL script (extract, transform, load)
-├── schema.sql                  # Database schema (tables creation)
-├── queries.sql                 # SQL queries for analysis
-├── README.md                   # Project overview, setup, design, challenges
-├── requirements.txt            # Python dependencies
-├── config.py                   # OMDb API key (user-created by you)
-├── movies.csv                  # MovieLens movies dataset
-└── ratings.csv                 # MovieLens ratings dataset  
+## Development & Testing
+- Linting: run flake8/ruff (if configured)
+- Tests: run pytest (if tests exist)
+```bash
+pytest
+```
 
+## Troubleshooting
+- Missing API key: ensure TMDB_API_KEY or relevant key is set.
+- CSV parsing errors: verify delimiter and encoding (UTF-8).
+- Duplicate entries: check deduplication logic in the ETL scripts.
+- Schema mismatches: confirm expected CSV column names and adjust mapping.
+
+## Contributing
+1. Fork the repo
+2. Create a feature branch
+3. Open a pull request with clear description of changes
+
+## License
+Specify your license here (e.g., MIT). If you don't have one, consider adding a LICENSE file.
+
+## Contact
+For issues and questions, open an issue on the repository or contact the maintainer: @GopiKrishnavtp
