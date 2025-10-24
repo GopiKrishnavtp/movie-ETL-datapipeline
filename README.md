@@ -9,15 +9,16 @@ This structured database can then be used to run analytical queries on movies, g
 # Setup and Run Instructions
 
 1. Install Python 3.8+ and required packages:
-   pip install -r requirements.txt
+  * pip install -r requirements.txt
 
-2.Create config.py with your OMDb API key:
-   API_KEY = "your_omdb_api_key_here"
+2. Create config.py with your OMDb API key:
+  * API_KEY = "your_omdb_api_key_here"
 
-3. Download the MovieLens dataset:Go to https://grouplens.org/datasets/movielens/latest/
-   Extract movies.csv and ratings.csv into the project folder.
-   Place movies.csv and ratings.csv in the project folder.
-   Run the ETL pipeline:python etl.py
+3. Download the MovieLens dataset:
+  * Go to https://grouplens.org/datasets/movielens/latest/
+  * Extract movies.csv and ratings.csv into the project folder.
+  * Place movies.csv and ratings.csv in the project folder.
+  * Run the ETL pipeline:python etl.py
 
 # Design Choices & Assumptions
 
