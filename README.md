@@ -7,7 +7,7 @@ A small ETL pipeline that extracts movie and rating data from CSV files, enriche
 - Enrich movie records with external metadata (e.g., runtime, overview, release date).
 - Clean and normalize genres, directors, and other metadata.
 - Load transformed data into a SQLite database with normalized tables for movies, genres, directors, and ratings.
-- Simple CLI to run the ETL pipeline.
+- Simple query to run the ETL pipeline.
 
 ## Prerequisites
 - Python 3.8+
