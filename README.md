@@ -44,7 +44,7 @@ pip install -r requirements.txt
 4. Configuration
 - Create a `config.py` file (or update configuration) with any required environment variables, for example:
 ```
-TMDB_API_KEY=your_omdb_api_key_here
+OMDB_API_KEY=your_omdb_api_key_here
 DB_PATH=data/movies.db
 DATA_DIR=data
 ```
