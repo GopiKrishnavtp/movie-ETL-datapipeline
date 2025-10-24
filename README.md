@@ -54,8 +54,10 @@ This structured database can then be used to run analytical queries on movies, g
    * Used DROP TABLE IF EXISTS and if_exists='replace' to safely reload data.  
 
 # Design
+![graph](graphdata.jpg)
+
 movie-data-pipeline/           # Root project folder
-├── etl.py  # Main ETL script (extract, transform, load)
+├── etl.py                     # Main ETL script (extract, transform, load)
 ├── schema.sql                  # Database schema (tables creation)
 ├── queries.sql                 # SQL queries for analysis
 ├── README.md                   # Project overview, setup, design, challenges
@@ -63,3 +65,4 @@ movie-data-pipeline/           # Root project folder
 ├── config.py                   # OMDb API key (user-created by you)
 ├── movies.csv                  # MovieLens movies dataset
 └── ratings.csv                 # MovieLens ratings dataset  
+
