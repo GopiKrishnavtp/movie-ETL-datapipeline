@@ -1,4 +1,6 @@
-#Movie Data Pipeline 
+#Movie Data Pipeline
+
+
 A simple ETL pipeline that ingests, cleans, and organizes movie data for analysis.
 This project implements a small ETL pipeline for a movie analytics scenario. 
 It extracts movie and rating data from CSV files and enriches it with details from the OMDb API. 
